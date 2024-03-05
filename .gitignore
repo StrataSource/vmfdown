@@ -1,0 +1,4 @@
+run
+.idea
+cmake-build-*
+test/*_out.vmf
