@@ -39,7 +39,7 @@ auto main( int argc, char* argv[] ) -> int {
 	{
 		tm local{};
 		#if defined( _WIN32 )
-			localtime_s( &local, &now );
+			localtime_s( &local, &start );
 		#else
 			localtime_r( &start, &local );
 		#endif
