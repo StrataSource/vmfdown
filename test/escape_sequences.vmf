@@ -826,7 +826,7 @@ entity
 	"targetname" "worker"
 	connections
 	{
-		"OnMapSpawn" "workerRunScriptCodeprintl(\"Hello there! i am using escapes\")0-1"
+		"OnMapSpawn" "workerRunScriptCodeprintl(\"Hello there, this is a quote \\\" inside a string\")0-1"
 	}
 	"origin" "640 676.688 192"
 	editor
