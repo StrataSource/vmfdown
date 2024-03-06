@@ -22,8 +22,25 @@ void entityEscPass( KeyValueRoot& root, bool postcompiler ) {
 	}
 }
 
+void entityQuotingPass( KeyValueRoot& root, bool postcompiler ) {
+	auto& firstEnt{ root["entity"] };
+	for ( auto* entity{&firstEnt}; entity->Next(); entity = entity->Next() ) {
+		auto& conns{ entity->Get( "connections" ) };
+		for ( auto connN{0}; connN < conns.ChildCount(); connN += 1 ) {
+			auto value{ conns.At( connN ).Value().string };
+			auto runScript{ strstr( value, "RunScriptCode" ) };
+			auto length{ conns.At( connN ).Value().length };
+
+			for ( int j{0}; j < length; j += 1 ) {
+				if ( value[j] == '"' )
+					value[j] = (runScript && postcompiler) ? '`' : '\'';
+			}
+		}
+	}
+}
+
 using PassFn = void(*)(KeyValueRoot&, bool);
-static PassFn passes[1] { entityEscPass };
+static PassFn passes[2] { entityEscPass, entityQuotingPass };
 
 auto process( const std::string& inputFile, bool postcompiler ) -> int {
 	// read input file
